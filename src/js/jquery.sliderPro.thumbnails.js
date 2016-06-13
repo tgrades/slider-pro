@@ -1,5 +1,5 @@
 // Thumbnails module for Slider Pro.
-// 
+//
 // Adds the possibility to create a thumbnail scroller, each thumbnail
 // corresponding to a slide.
 ;(function( window, $ ) {
@@ -10,7 +10,7 @@
 
 	var Thumbnails = {
 
-		// Reference to the thumbnail scroller 
+		// Reference to the thumbnail scroller
 		$thumbnails: null,
 
 		// Reference to the container of the thumbnail scroller
@@ -89,7 +89,7 @@
 
 							shuffledThumbnails.push( $thumbnail );
 						});
-						
+
 						// Append the sorted thumbnails to the thumbnail scroller
 						this.$thumbnails.empty().append( shuffledThumbnails ) ;
 					}
@@ -169,7 +169,7 @@
 			// Mark the thumbnail that corresponds to the selected slide
 			this.selectedThumbnailIndex = this.selectedSlideIndex;
 			this.$thumbnails.find( '.sp-thumbnail-container' ).eq( this.selectedThumbnailIndex ).addClass( 'sp-selected-thumbnail' );
-			
+
 			// Calculate the total size of the thumbnails
 			this.thumbnailsSize = 0;
 
@@ -177,6 +177,11 @@
 				thumbnail.setSize( that.settings.thumbnailWidth, that.settings.thumbnailHeight );
 				that.thumbnailsSize += that.thumbnailsOrientation === 'horizontal' ? thumbnail.getSize().width : thumbnail.getSize().height;
 			});
+
+      // Calculate size of add button
+      if(this.settings.addButton) {
+        this.$addButton.css({ 'width': this.settings.thumbnailWidth, 'height': this.settings.thumbnailHeight, 'display': 'block' });
+      }
 
 			// Set the size of the thumbnails
 			if ( this.thumbnailsOrientation === 'horizontal' ) {
@@ -222,6 +227,21 @@
 
 			if ( this.thumbnailsOrientation === 'horizontal' ) {
 				this.thumbnailsContainerSize = Math.min( this.$slidesMask.width(), this.thumbnailsSize );
+
+        if(this.settings.addButton) {
+          if(this.$slidesMask.width() - this.thumbnailsContainerSize < this.settings.thumbnailWidth) {
+            this.thumbnailsContainerSize = this.$slidesMask.width();
+            this.$thumbnailsContainer.css('margin-left', this.settings.thumbnailWidth);
+            this.thumbnailsContainerSize -= this.settings.thumbnailWidth;
+          } else {
+            var margings = this.$slidesMask.width() - this.thumbnailsContainerSize - this.settings.thumbnailWidth;
+            var marginRight = margings / 2;
+            var marginLeft = marginRight + this.settings.thumbnailWidth;
+            this.$thumbnailsContainer.css('margin-left', marginLeft);
+            this.$thumbnailsContainer.css('margin-right', marginRight);
+          }
+        }
+
 				this.$thumbnailsContainer.css( 'width', this.thumbnailsContainerSize );
 
 				// Reduce the slide mask's height, to make room for the thumbnails
@@ -230,7 +250,7 @@
 
 					// Resize the slide
 					this.slideHeight = this.$slidesMask.height();
-						
+
 					$.each( this.slides, function( index, element ) {
 						element.setSize( that.slideWidth, that.slideHeight );
 					});
@@ -247,12 +267,12 @@
 					} else {
 						this.$slider.css( 'max-width', this.$slider.parent().width() - this.$thumbnailsContainer.outerWidth( true ) );
 					}
-					
+
 					this.$slidesMask.css( 'width', this.$slider.width() );
 
 					// If the slides are horizontally oriented, update the visible size and the offset
 					// of the selected slide, since the slider's size was reduced to make room for the thumbnails.
-					// 
+					//
 					// If the slides are vertically oriented, update the width and height (to maintain the aspect ratio)
 					// of the slides.
 					if ( this.settings.orientation === 'horizontal' ) {
@@ -277,7 +297,7 @@
 			// If the total size of the thumbnails is smaller than the thumbnail scroller' container (which has
 			// the same size as the slides container), it means that all the thumbnails will be visible, so set
 			// the position of the thumbnail scroller to 0.
-			// 
+			//
 			// If that's not the case, the thumbnail scroller will be positioned based on which thumbnail is selected.
 			if ( this.thumbnailsSize <= this.thumbnailsContainerSize || this.$thumbnails.find( '.sp-selected-thumbnail' ).length === 0 ) {
 				newThumbnailsPosition = 0;
@@ -317,11 +337,11 @@
 			this.$thumbnails.find( '.sp-thumbnail-container' ).eq( this.selectedThumbnailIndex ).addClass( 'sp-selected-thumbnail' );
 
 			// Calculate the new position that the thumbnail scroller needs to go to.
-			// 
+			//
 			// If the selected thumbnail has a higher index than the previous one, make sure that the thumbnail
 			// that comes after the selected thumbnail will be visible, if the selected thumbnail is not the
 			// last thumbnail in the list.
-			// 
+			//
 			// If the selected thumbnail has a lower index than the previous one, make sure that the thumbnail
 			// that's before the selected thumbnail will be visible, if the selected thumbnail is not the
 			// first thumbnail in the list.
@@ -472,7 +492,7 @@
 			if ( this.isThumbnailScroller === false ) {
 				return;
 			}
-			
+
 			this.off( 'sliderResize.' + NS );
 			this.off( 'gotoSlide.' + NS );
 			$( window ).off( 'resize.' + this.uniqueId + '.' + NS );
@@ -493,7 +513,7 @@
 			// remove the thumbnail scroller container
 			this.$thumbnails.appendTo( this.$slider );
 			this.$thumbnailsContainer.remove();
-			
+
 			// Remove any created padding
 			this.$slider.css({ 'paddingTop': '', 'paddingLeft': '', 'paddingRight': '' });
 		},
@@ -531,7 +551,7 @@
 		// Reference to the thumbnail scroller
 		this.$thumbnails = thumbnails;
 
-		// Reference to the thumbnail's container, which will be 
+		// Reference to the thumbnail's container, which will be
 		// created dynamically.
 		this.$thumbnailContainer = null;
 
@@ -657,7 +677,7 @@
 			} else {
 				this.$thumbnail.insertBefore( this.$thumbnailContainer );
 			}
-			
+
 			this.$thumbnailContainer.remove();
 		},
 

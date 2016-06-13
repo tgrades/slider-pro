@@ -98,15 +98,15 @@
 
 		// Reference to the old slide height, used to check if the height has changed
 		this.previousSlideHeight = 0;
-		
+
 		// Reference to the old window width, used to check if the window width has changed
 		this.previousWindowWidth = 0;
-		
+
 		// Reference to the old window height, used to check if the window height has changed
 		this.previousWindowHeight = 0;
 
 		// The distance from the margin of the slider to the left/top of the selected slide.
-		// This is useful in calculating the position of the selected slide when there are 
+		// This is useful in calculating the position of the selected slide when there are
 		// more visible slides.
 		this.visibleOffset = 0;
 
@@ -152,7 +152,7 @@
 			// older IE versions might need CSS tweaks.
 			var rmsie = /(msie) ([\w.]+)/,
 				ieVersion = rmsie.exec( window.navigator.userAgent.toLowerCase() );
-			
+
 			if ( this.isIE ) {
 				this.$slider.addClass( 'ie' );
 			}
@@ -167,7 +167,7 @@
 			this.$slidesMask = $( '<div class="sp-mask"></div>' ).appendTo( this.$slidesContainer );
 			this.$slides = this.$slider.find( '.sp-slides' ).appendTo( this.$slidesMask );
 			this.$slider.find( '.sp-slide' ).appendTo( this.$slides );
-			
+
 			var modules = $.SliderPro.modules;
 
 			// Merge the modules' default settings with the core's default settings
@@ -180,6 +180,15 @@
 					}
 				}
 			}
+
+      // Add image button
+      if(this.settings.addButton) {
+        this.$addButton = this.$slider.find( '.sp-add-image-button' );
+
+        if(this.settings.addButtonClickHandler) {
+          this.$addButton.on( 'click', this.settings.addButtonClickHandler );
+        }
+      }
 
 			// Merge the specified setting with the default ones
 			this.settings = $.extend( {}, this.defaults, this.options );
@@ -238,20 +247,20 @@
 				$.each( this.shuffledIndexes, function( index, element ) {
 					shuffledSlides.push( slides[ element ] );
 				});
-				
+
 				// Append the sorted slides to the slider
 				this.$slides.empty().append( shuffledSlides ) ;
 			}
-			
+
 			// Resize the slider when the browser window resizes.
 			// Also, deffer the resizing in order to not allow multiple
 			// resizes in a 200 milliseconds interval.
 			$( window ).on( 'resize.' + this.uniqueId + '.' + NS, function() {
-			
+
 				// Get the current width and height of the window
 				var newWindowWidth = $( window ).width(),
 					newWindowHeight = $( window ).height();
-				
+
 				// If the resize is not allowed yet or if the window size hasn't changed (this needs to be verified
 				// because in IE8 and lower the resize event is triggered whenever an element from the page changes
 				// its size) return early.
@@ -259,11 +268,11 @@
 					( that.previousWindowWidth === newWindowWidth && that.previousWindowHeight === newWindowHeight ) ) {
 					return;
 				}
-				
+
 				// Asign the new values for the window width and height
 				that.previousWindowWidth = newWindowWidth;
 				that.previousWindowHeight = newWindowHeight;
-			
+
 				that.allowResize = false;
 
 				setTimeout(function() {
@@ -379,7 +388,7 @@
 			// If the distance is negative it means that the selected slider is before the middle position, so
 			// slides from the end of the array will be added at the beginning, in order to shift the selected slide
 			// forward.
-			// 
+			//
 			// If the distance is positive, slides from the beginning of the array will be added at the end.
 			if ( distance < 0 ) {
 				slicedItems = this.slidesOrder.splice( distance, Math.abs( distance ) );
@@ -424,7 +433,7 @@
 
 			// Check if the current window width is bigger than the biggest breakpoint
 			// and if necessary reset the properties to the original settings.
-			// 
+			//
 			// If the window width is smaller than a certain breakpoint, apply the settings specified
 			// for that breakpoint but only after merging them with the original settings
 			// in order to make sure that only the specified settings for the breakpoint are applied
@@ -444,7 +453,7 @@
 								this.currentBreakpoint = this.breakpoints[ i ].size;
 								var settings = $.extend( {}, this.originalSettings, this.breakpoints[ i ].properties );
 								this._setProperties( settings, false );
-								
+
 								return;
 							}
 
@@ -473,7 +482,7 @@
 			if ( this.settings.aspectRatio === -1 ) {
 				this.settings.aspectRatio = this.settings.width / this.settings.height;
 			}
-			
+
 			// Initially set the slide width to the size of the slider.
 			// Later, this will be set to less if there are multiple visible slides.
 			this.slideWidth = this.$slider.width();
@@ -503,7 +512,7 @@
 			// The slide width or slide height is needed for several calculation, so create a reference to it
 			// based on the current orientation.
 			this.slideSize = this.settings.orientation === 'horizontal' ? this.slideWidth : this.slideHeight;
-			
+
 			// Initially set the visible size of the slides and the offset of the selected slide as if there is only
 			// on visible slide.
 			// If there will be multiple visible slides (when 'visibleSize' is different than 'auto'), these will
@@ -545,7 +554,7 @@
 					} else {
 						this.$slider.css({ 'width': this.settings.visibleSize, 'max-width': '100%', 'marginLeft': 0 });
 					}
-					
+
 					this.$slidesMask.css( 'width', this.$slider.width() );
 
 					this.visibleSlidesSize = this.$slidesMask.width();
@@ -669,9 +678,9 @@
 			if ( position === this.slidesPosition ) {
 				return;
 			}
-			
+
 			this.slidesPosition = position;
-			
+
 			if ( ( this.supportedAnimation === 'css-3d' || this.supportedAnimation === 'css-2d' ) && this.isIE === false ) {
 				var transition,
 					left = this.settings.orientation === 'horizontal' ? position : 0,
@@ -696,7 +705,7 @@
 
 						that.$slides.off( that.transitionEvent );
 						that.$slides.removeClass( 'sp-animated' );
-						
+
 						if ( typeof callback === 'function' ) {
 							callback();
 						}
@@ -736,7 +745,7 @@
 					matrixArray = matrixString.replace( matrixType, '' ).match( /-?[0-9\.]+/g ),
 					left = matrixType === 'matrix3d' ? parseInt( matrixArray[ 12 ], 10 ) : parseInt( matrixArray[ 4 ], 10 ),
 					top = matrixType === 'matrix3d' ? parseInt( matrixArray[ 13 ], 10 ) : parseInt( matrixArray[ 5 ], 10 );
-					
+
 				// Set the transform property to the value that the transform had when the function was called
 				if ( this.supportedAnimation === 'css-3d' ) {
 					css[ this.vendorPrefix + 'transform' ] = 'translate3d(' + left + 'px, ' + top + 'px, 0)';
@@ -796,7 +805,7 @@
 		destroy: function() {
 			// Remove the stored reference to this instance
 			this.$slider.removeData( 'sliderPro' );
-			
+
 			// Clean the CSS
 			this.$slider.removeAttr( 'style' );
 			this.$slides.removeAttr( 'style' );
@@ -823,7 +832,7 @@
 
 			this.slides.length = 0;
 
-			// Move the slides to their initial position in the DOM and 
+			// Move the slides to their initial position in the DOM and
 			// remove the container elements created dynamically.
 			this.$slides.prependTo( this.$slider );
 			this.$slidesContainer.remove();
@@ -928,7 +937,7 @@
 
 			// Sets the size of the visible area, allowing the increase of it in order
 			// to make more slides visible.
-			// By default, only the selected slide will be visible. 
+			// By default, only the selected slide will be visible.
 			visibleSize: 'auto',
 
 			// Breakpoints for allowing the slider's options to be changed
@@ -1032,7 +1041,7 @@
 		// Set the size of the slide
 		setSize: function( width, height ) {
 			var that = this;
-			
+
 			this.width = width;
 			this.height = this.settings.autoHeight === true ? 'auto' : height;
 
@@ -1123,7 +1132,7 @@
 		},
 
 		// Resize the main image.
-		// 
+		//
 		// Call this when the slide resizes or when the main image has changed to a different image.
 		resizeMainImage: function( isNewImage ) {
 			var that = this;
@@ -1321,7 +1330,7 @@
 			} else {
 				this.supportedAnimation = 'javascript';
 			}
-			
+
 			return this.supportedAnimation;
 		},
 
@@ -1333,19 +1342,19 @@
 
 			var div = document.createElement( 'div' ),
 				prefixes = [ 'Webkit', 'Moz', 'ms', 'O' ];
-			
+
 			if ( 'transform' in div.style ) {
 				this.vendorPrefix = '';
 				return this.vendorPrefix;
 			}
-			
+
 			for ( var i = 0; i < prefixes.length; i++ ) {
 				if ( ( prefixes[ i ] + 'Transform' ) in div.style ) {
 					this.vendorPrefix = '-' + prefixes[ i ].toLowerCase() + '-';
 					break;
 				}
 			}
-			
+
 			return this.vendorPrefix;
 		},
 
