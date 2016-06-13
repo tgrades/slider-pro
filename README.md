@@ -1,3 +1,5 @@
+This is a fork from bqworks/slider-pro(https://github.com/bqworks/slider-pro/) for my personal purposes
+
 # [Slider Pro - jQuery slider plugin](http://bqworks.com/slider-pro/) #
 
 >A modular, responsive and touch-enabled jQuery slider plugin that enables you to create elegant and professionally looking sliders.
