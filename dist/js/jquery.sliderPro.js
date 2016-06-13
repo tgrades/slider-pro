@@ -187,17 +187,17 @@
 				}
 			}
 
+			// Merge the specified setting with the default ones
+			this.settings = $.extend( {}, this.defaults, this.options );
+
       // Add image button
-      if(this.settings.addButton) {
+      if ( this.settings.addButton ) {
         this.$addButton = this.$slider.find( '.sp-add-image-button' );
 
-        if(this.settings.addButtonClickHandler) {
+        if ( this.settings.addButtonClickHandler ) {
           this.$addButton.on( 'click', this.settings.addButtonClickHandler );
         }
       }
-
-			// Merge the specified setting with the default ones
-			this.settings = $.extend( {}, this.defaults, this.options );
 
 			// Initialize the modules
 			if ( typeof modules !== 'undefined' ) {
@@ -1640,7 +1640,7 @@
 			});
 
       // Calculate size of add button
-      if(this.settings.addButton) {
+      if ( this.settings.addButton ) {
         this.$addButton.css({ 'width': this.settings.thumbnailWidth, 'height': this.settings.thumbnailHeight, 'display': 'block' });
       }
 
@@ -1689,8 +1689,8 @@
 			if ( this.thumbnailsOrientation === 'horizontal' ) {
 				this.thumbnailsContainerSize = Math.min( this.$slidesMask.width(), this.thumbnailsSize );
 
-        if(this.settings.addButton) {
-          if(this.$slidesMask.width() - this.thumbnailsContainerSize < this.settings.thumbnailWidth) {
+        if ( this.settings.addButton ) {
+          if ( this.$slidesMask.width() - this.thumbnailsContainerSize < this.settings.thumbnailWidth ) {
             this.thumbnailsContainerSize = this.$slidesMask.width();
             this.$thumbnailsContainer.css('margin-left', this.settings.thumbnailWidth);
             this.thumbnailsContainerSize -= this.settings.thumbnailWidth;

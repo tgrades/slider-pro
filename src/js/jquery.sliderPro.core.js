@@ -181,17 +181,17 @@
 				}
 			}
 
+			// Merge the specified setting with the default ones
+			this.settings = $.extend( {}, this.defaults, this.options );
+
       // Add image button
-      if(this.settings.addButton) {
+      if ( this.settings.addButton ) {
         this.$addButton = this.$slider.find( '.sp-add-image-button' );
 
-        if(this.settings.addButtonClickHandler) {
+        if ( this.settings.addButtonClickHandler ) {
           this.$addButton.on( 'click', this.settings.addButtonClickHandler );
         }
       }
-
-			// Merge the specified setting with the default ones
-			this.settings = $.extend( {}, this.defaults, this.options );
 
 			// Initialize the modules
 			if ( typeof modules !== 'undefined' ) {

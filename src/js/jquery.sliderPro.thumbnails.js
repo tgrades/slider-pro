@@ -179,7 +179,7 @@
 			});
 
       // Calculate size of add button
-      if(this.settings.addButton) {
+      if ( this.settings.addButton ) {
         this.$addButton.css({ 'width': this.settings.thumbnailWidth, 'height': this.settings.thumbnailHeight, 'display': 'block' });
       }
 
@@ -228,8 +228,8 @@
 			if ( this.thumbnailsOrientation === 'horizontal' ) {
 				this.thumbnailsContainerSize = Math.min( this.$slidesMask.width(), this.thumbnailsSize );
 
-        if(this.settings.addButton) {
-          if(this.$slidesMask.width() - this.thumbnailsContainerSize < this.settings.thumbnailWidth) {
+        if ( this.settings.addButton ) {
+          if ( this.$slidesMask.width() - this.thumbnailsContainerSize < this.settings.thumbnailWidth ) {
             this.thumbnailsContainerSize = this.$slidesMask.width();
             this.$thumbnailsContainer.css('margin-left', this.settings.thumbnailWidth);
             this.thumbnailsContainerSize -= this.settings.thumbnailWidth;
