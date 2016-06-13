@@ -1,4 +1,4 @@
-This is a fork from bqworks/slider-pro(https://github.com/bqworks/slider-pro/) for my personal purposes
+This is a fork from [bqworks/slider-pro](https://github.com/bqworks/slider-pro/) for my personal purposes
 
 # [Slider Pro - jQuery slider plugin](http://bqworks.com/slider-pro/) #
 
