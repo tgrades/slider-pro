@@ -1517,7 +1517,7 @@
 		_thumbnailsOnUpdate: function() {
 			var that = this;
 
-			if ( this.$slider.find( '.sp-thumbnail' ).length === 0 && this.thumbnails.length === 0 ) {
+			if ( this.$slider.find( '.sp-thumbnail' ).length === 0 && this.thumbnails.length === 0 && !this.settings.addButton ) {
 				this.isThumbnailScroller = false;
 				return;
 			}
