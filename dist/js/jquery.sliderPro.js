@@ -2713,7 +2713,7 @@
 })( window, jQuery );
 
 // Layers module for Slider Pro.
-// 
+//
 // Adds support for animated and static layers. The layers can contain any content,
 // from simple text for video elements.
 ;(function( window, $ ) {
@@ -2769,9 +2769,9 @@
 
 			// If the 'waitForLayers' option is enabled, the slider will not move to another slide
 			// until all the layers from the previous slide will be hidden. To achieve this,
-			// replace the current 'gotoSlide' function with another function that will include the 
+			// replace the current 'gotoSlide' function with another function that will include the
 			// required functionality.
-			// 
+			//
 			// Since the 'gotoSlide' method might be overridden by other modules as well, delay this
 			// override to make sure it's the last override.
 			if ( this.settings.waitForLayers === true ) {
@@ -2787,7 +2787,9 @@
 			// Delay the call in order to make sure the layers
 			// are scaled properly before displaying them
 			setTimeout(function() {
-				that.showLayers( that.selectedSlideIndex );
+				if( that.slides.length ) {
+          that.showLayers( that.selectedSlideIndex );
+        }
 			}, 1);
 		},
 
@@ -2834,7 +2836,7 @@
 			});
 		},
 
-		// Replace the 'gotoSlide' method with this one, which makes it possible to 
+		// Replace the 'gotoSlide' method with this one, which makes it possible to
 		// change the slide only after the layers from the previous slide are hidden.
 		_layersGotoSlide: function( index ) {
 			var that = this,
@@ -2876,7 +2878,7 @@
 
 			$.each( animatedLayers, function( index, element ) {
 
-				// If the layer is already visible, increment the counter directly, else wait 
+				// If the layer is already visible, increment the counter directly, else wait
 				// for the layer's showing animation to complete.
 				if ( element.isVisible() === true ) {
 					layerCounter++;
@@ -2915,7 +2917,7 @@
 
 			$.each( animatedLayers, function( index, element ) {
 
-				// If the layer is already invisible, increment the counter directly, else wait 
+				// If the layer is already invisible, increment the counter directly, else wait
 				// for the layer's hiding animation to complete.
 				if ( element.isVisible() === false ) {
 					layerCounter++;
@@ -2972,7 +2974,7 @@
 		}
 	};
 
-	// Override the slide's 'destroy' method in order to destroy the 
+	// Override the slide's 'destroy' method in order to destroy the
 	// layers that where added to the slide as well.
 	var slideDestroy = window.SliderProSlide.prototype.destroy;
 
@@ -3008,16 +3010,16 @@
 
 		// Indicates the layer's reference point (topLeft, bottomLeft, topRight or bottomRight)
 		this.position = null;
-		
-		// Indicates which CSS property (left or right) will be used for positioning the layer 
+
+		// Indicates which CSS property (left or right) will be used for positioning the layer
 		this.horizontalProperty = null;
-		
-		// Indicates which CSS property (top or bottom) will be used for positioning the layer 
+
+		// Indicates which CSS property (top or bottom) will be used for positioning the layer
 		this.verticalProperty = null;
 
 		// Indicates the value of the horizontal position
 		this.horizontalPosition = null;
-		
+
 		// Indicates the value of the vertical position
 		this.verticalPosition = null;
 
@@ -3058,7 +3060,7 @@
 
 			// Get the data attributes specified in HTML
 			this.data = this.$layer.data();
-			
+
 			if ( typeof this.data.width !== 'undefined' ) {
 				this.$layer.css( 'width', this.data.width );
 			}
@@ -3103,7 +3105,7 @@
 
 			// Set the horizontal position of the layer based on the data set
 			if ( this.horizontalProperty === 'center' ) {
-				
+
 				// prevent content wrapping while setting the width
 				if ( this.$layer.is( 'img' ) === false && ( typeof inlineStyle === 'undefined' || ( typeof inlineStyle !== 'undefined' && inlineStyle.indexOf( 'width' ) === -1 ) ) ) {
 					this.$layer.css( 'white-space', 'nowrap' );
@@ -3367,8 +3369,9 @@
 	};
 
 	$.SliderPro.addModule( 'Layers', Layers );
-	
+
 })( window, jQuery );
+
 
 // Fade module for Slider Pro.
 // 
