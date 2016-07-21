@@ -1,10 +1,10 @@
 // Touch Swipe module for Slider Pro.
-// 
+//
 // Adds touch-swipe functionality for slides.
 ;(function( window, $ ) {
 
 	"use strict";
-	
+
 	var NS = 'TouchSwipe.' + $.SliderPro.namespace;
 
 	var TouchSwipe = {
@@ -51,7 +51,7 @@
 
 		// Called when the slides starts being dragged
 		_onTouchStart: function( event ) {
-		
+
 			// Disable dragging if the element is set to allow selections
 			if ( $( event.target ).closest( '.sp-selectable' ).length >= 1 ) {
 				return;
@@ -112,10 +112,10 @@
 			// Calculate the distance of the movement on both axis
 			this.touchDistance.x = this.touchEndPoint.x - this.touchStartPoint.x;
 			this.touchDistance.y = this.touchEndPoint.y - this.touchStartPoint.y;
-			
+
 			// Calculate the distance of the swipe that takes place in the same direction as the orientation of the slides
 			// and calculate the distance from the opposite direction.
-			// 
+			//
 			// For a swipe to be valid there should more distance in the same direction as the orientation of the slides.
 			var distance = this.settings.orientation === 'horizontal' ? this.touchDistance.x : this.touchDistance.y,
 				oppositeDistance = this.settings.orientation === 'horizontal' ? this.touchDistance.y : this.touchDistance.x;
@@ -160,7 +160,7 @@
 
 			// Remove the 'sp-swiping' class but with a delay
 			// because there might be other event listeners that check
-			// the existence of this class, and this class should still be 
+			// the existence of this class, and this class should still be
 			// applied for those listeners, since there was a swipe event
 			setTimeout(function() {
 				that.$slider.removeClass( 'sp-swiping' );
@@ -192,8 +192,8 @@
 				slideArrayDistance = parseInt( slideArrayDistance, 10 ) + ( slideArrayDistance > 0 ? 1 : - 1 );
 
 				// Get the index of the currently selected slide and subtract the position index in order to obtain
-				// the new index of the selected slide. 
-				var nextSlideIndex = this.slidesOrder[ $.inArray( this.selectedSlideIndex, this.slidesOrder ) - slideArrayDistance ];
+				// the new index of the selected slide.
+				var nextSlideIndex = this.slidesOrder[ Math.max(0, $.inArray( this.selectedSlideIndex, this.slidesOrder ) - slideArrayDistance) ];
 
 				if ( this.settings.loop === true ) {
 					this.gotoSlide( nextSlideIndex );
@@ -217,7 +217,7 @@
 		},
 
 		touchSwipeDefaults: {
-			
+
 			// Indicates whether the touch swipe will be enabled
 			touchSwipe: true,
 
@@ -227,5 +227,5 @@
 	};
 
 	$.SliderPro.addModule( 'TouchSwipe', TouchSwipe );
-	
+
 })( window, jQuery );
