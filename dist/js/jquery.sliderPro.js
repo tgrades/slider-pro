@@ -3745,7 +3745,7 @@
 
 				// Get the index of the currently selected slide and subtract the position index in order to obtain
 				// the new index of the selected slide.
-				var nextSlideIndex = this.slidesOrder[ Math.max(0, $.inArray( this.selectedSlideIndex, this.slidesOrder ) - slideArrayDistance) ];
+				var nextSlideIndex = this.slidesOrder[ Math.abs($.inArray( this.selectedSlideIndex, this.slidesOrder ) - slideArrayDistance) ];
 
 				if ( this.settings.loop === true ) {
 					this.gotoSlide( nextSlideIndex );
